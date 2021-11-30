@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  makeStyles,
 } from "@material-ui/core";
 import { Home, LocalMall, VpnKey, SupervisorAccount } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -13,7 +14,19 @@ type Props = {
   closeMenu: () => void;
 };
 
+const useStyles = makeStyles({
+  link: {
+    transition: "color 0.25s ease-in-out",
+    color: "#333",
+    "&:hover": {
+      color: "#717FE0",
+    },
+  },
+});
+
 const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
+  const { link } = useStyles();
+
   return (
     <Drawer anchor="top" open={isOpen} onClose={closeMenu}>
       <List component="nav">
@@ -21,25 +34,25 @@ const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
           <ListItemIcon>
             <Home />
           </ListItemIcon>
-          <ListItemText primary="Home" />
+          <ListItemText className={link} primary="Home" />
         </ListItem>
         <ListItem component={Link} to="/shop">
           <ListItemIcon>
             <LocalMall />
           </ListItemIcon>
-          <ListItemText primary="Shop" />
+          <ListItemText className={link} primary="Shop" />
         </ListItem>
         <ListItem component={Link} to="/login">
           <ListItemIcon>
             <VpnKey />
           </ListItemIcon>
-          <ListItemText primary="Login" />
+          <ListItemText className={link} primary="Login" />
         </ListItem>
         <ListItem component={Link} to="/admin">
           <ListItemIcon>
             <SupervisorAccount />
           </ListItemIcon>
-          <ListItemText primary="Admin" />
+          <ListItemText className={link} primary="Admin" />
         </ListItem>
       </List>
     </Drawer>
