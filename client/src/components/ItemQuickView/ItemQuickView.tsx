@@ -62,7 +62,7 @@ const ItemQuickView: React.FC<Props> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 700);
     return () => {
       clearTimeout(timer);
     };
@@ -127,7 +127,12 @@ const ItemQuickView: React.FC<Props> = ({
               </DialogContentText>
             </DialogContent>
             <DialogActions className={dialogButton}>
-              <ButtonGroup variant="contained" color="primary" disableRipple>
+              <ButtonGroup
+                size="small"
+                variant="contained"
+                color="primary"
+                disableRipple
+              >
                 <IconButton onClick={removeItem}>
                   <Remove />
                 </IconButton>
@@ -137,6 +142,7 @@ const ItemQuickView: React.FC<Props> = ({
                     value={quantity}
                     variant="outlined"
                     size="small"
+                    style={{ width: "150px" }}
                     onChange={handleQuantityChange}
                   />
                 </IconButton>
