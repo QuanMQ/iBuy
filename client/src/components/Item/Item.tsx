@@ -5,30 +5,16 @@ import {
   Card,
   CardContent,
   CardMedia,
-  makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import ItemQuickView from "../ItemQuickView/ItemQuickView";
 
+// *Styles
+import { Wrapper, useStyles } from "./Item.styles";
+
 // *Types
 import { CartItemType } from "../../App";
-
-// *Styles
-import { Wrapper } from "./Item.styles";
-
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    margin: "auto auto",
-  },
-  link: {
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "underline",
-    },
-  },
-});
 
 type Props = {
   item: CartItemType;

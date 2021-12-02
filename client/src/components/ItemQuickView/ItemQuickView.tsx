@@ -11,37 +11,16 @@ import {
   DialogActions,
   DialogContentText,
   TextField,
-  makeStyles,
 } from "@material-ui/core";
 import { Close, Add, Remove } from "@material-ui/icons";
 import { DialogWrapper } from "./ItemQuickView.styles";
 import ItemPurchaseConfirm from "../ItemPurchaseConfirm/ItemPurchaseConfirm";
 
+// *Styles
+import { useStyles } from "./ItemQuickView.styles";
+
 // *Types
 import { CartItemType } from "../../App";
-
-// *Styles
-const useStyles = makeStyles({
-  closeButton: {
-    position: "absolute",
-    right: 10,
-    top: 5,
-    color: "grey",
-  },
-  dialogButton: {
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    flexDirection: "column",
-    height: "150px",
-    "& > button:last-of-type": {
-      borderRadius: "50px",
-      "&:hover": {
-        backgroundColor: "#000",
-        color: "#fff",
-      },
-    },
-  },
-});
 
 type Props = {
   item: CartItemType;

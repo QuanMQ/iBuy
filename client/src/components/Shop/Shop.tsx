@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useQuery } from "react-query";
 import {
-  makeStyles,
   AppBar,
   Tabs,
   Tab,
@@ -11,7 +10,13 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 import TabPanelInner from "../TabPanelInner/TabPanelInner";
+
+// *Styles
+import { useStyles } from "./Shop.styles";
+
+// *Types
 import { CartItemType } from "../../App";
 
 const getProducts = async (): Promise<CartItemType[]> =>
@@ -49,24 +54,6 @@ function a11yProps(index: any) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-const useStyles = makeStyles({
-  root: {
-    marginTop: "5rem",
-    backgroundColor: "transparent",
-    color: "#333",
-    boxShadow: "none",
-  },
-  tab: {
-    textTransform: "capitalize",
-    fontSize: "1rem",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    transition: "color 0.15s linear",
-    "&:hover": {
-      color: "#717FE0",
-    },
-  },
-});
 
 const categories = [
   "all",
@@ -115,20 +102,23 @@ function Shop() {
   ));
 
   return (
-    <Container>
-      <Navbar />
-      <AppBar position="static" className={root}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-        >
-          {tabs}
-        </Tabs>
-      </AppBar>
-      {tabPanel}
-    </Container>
+    <Fragment>
+      <Container>
+        <Navbar />
+        <AppBar position="static" className={root}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="on"
+          >
+            {tabs}
+          </Tabs>
+        </AppBar>
+        {tabPanel}
+      </Container>
+      <Footer />
+    </Fragment>
   );
 }
 

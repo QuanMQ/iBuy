@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/core";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const Wrapper = styled.div`
   position: relative;
 
   &:hover button {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 
   &:hover img {
@@ -39,3 +40,16 @@ export const Wrapper = styled.div`
     }
   }
 `;
+
+export const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+    margin: "auto auto",
+  },
+  link: {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+});

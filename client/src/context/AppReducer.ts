@@ -32,7 +32,7 @@ const AppReducer = (state: State, action: Action): State => {
           cartItems: [...state.cartItems, action.payload],
         };
       }
-    case "ADD_TO_CART_2":
+    case "ADD_SINGLE_ITEM_TO_CART":
       return {
         ...state,
         cartItems: state.cartItems.map((item) =>
@@ -48,6 +48,17 @@ const AppReducer = (state: State, action: Action): State => {
           if (item.id === action.payload.id) {
             if (item.amount === 1) return acc;
             return [...acc, { ...item, amount: item.amount - 1 }];
+          } else {
+            return [...acc, item];
+          }
+        }, [] as CartItemType[]),
+      };
+    case "REMOVE_ALL_FROM_CART":
+      return {
+        ...state,
+        cartItems: [...state.cartItems].reduce((acc, item) => {
+          if (item.id === action.payload.id) {
+            return acc;
           } else {
             return [...acc, item];
           }
