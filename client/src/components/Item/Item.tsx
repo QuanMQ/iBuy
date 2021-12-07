@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Button,
   Typography,
@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import ItemQuickView from "../ItemQuickView/ItemQuickView";
+import { GlobalContext } from "../../context/GlobalState";
 
 // *Styles
 import { Wrapper, useStyles } from "./Item.styles";
@@ -23,6 +24,7 @@ type Props = {
 const Item: React.FC<Props> = ({ item }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { root, link } = useStyles();
+  const { dispatch } = useContext(GlobalContext);
   const props = useSpring({
     to: { opacity: 1, scale: 1 },
     from: { opacity: 0, scale: 0 },
@@ -34,6 +36,13 @@ const Item: React.FC<Props> = ({ item }) => {
   };
   const handleDialogClose = () => {
     setDialogOpen(false);
+  };
+
+  const handleViewItem = (clickedItem: CartItemType) => {
+    dispatch({
+      type: "VIEW_CURRENT_ITEM",
+      payload: clickedItem,
+    });
   };
 
   return (
@@ -56,7 +65,11 @@ const Item: React.FC<Props> = ({ item }) => {
             color="primary"
             variant="subtitle1"
             component={Link}
-            to={`/products/${item.id}`}
+            to={"/product"}
+            onClick={() => {
+              handleViewItem(item);
+              window.scrollTo(0, 0);
+            }}
           >
             {item.title}
           </Typography>

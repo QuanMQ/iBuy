@@ -56,11 +56,13 @@ const ItemQuickView: React.FC<Props> = ({
   };
 
   const handleAddToCart = (clickedItem: CartItemType) => {
-    clickedItem.amount = quantity;
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: clickedItem,
-    });
+    if (quantity) {
+      clickedItem.amount = quantity;
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: clickedItem,
+      });
+    }
   };
 
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,6 +131,11 @@ const ItemQuickView: React.FC<Props> = ({
                   <Add />
                 </IconButton>
               </ButtonGroup>
+              {!quantity && (
+                <Typography color="error">
+                  Error: Number of items cannot be smaller than 1
+                </Typography>
+              )}
               <Button
                 size="large"
                 variant="contained"
@@ -136,8 +143,10 @@ const ItemQuickView: React.FC<Props> = ({
                 color="primary"
                 onClick={() => {
                   handleAddToCart(item);
-                  handleModalOpen();
-                  setLoading(true);
+                  if (quantity) {
+                    handleModalOpen();
+                    setLoading(true);
+                  }
                 }}
               >
                 ADD TO CART

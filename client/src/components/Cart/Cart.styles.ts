@@ -20,11 +20,16 @@ export const useStyles = makeStyles({
   button: {
     fontWeight: "bold",
     borderRadius: "20px",
-    marginTop: "30px",
+    width: "40%",
     backgroundColor: "#222",
     color: "#fff",
     "&:hover": {
       backgroundColor: "#717FE0",
     },
+  },
+  box: {
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "space-evenly",
   },
 });

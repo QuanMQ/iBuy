@@ -1,16 +1,13 @@
 import { CartItemType } from "../App";
-
-type State = {
-  cartItems: CartItemType[];
-};
-
-type Action = {
-  type: string;
-  payload: CartItemType;
-};
+import { State, Action } from "./GlobalState";
 
 const AppReducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "VIEW_CURRENT_ITEM":
+      return {
+        ...state,
+        currentItem: action.payload,
+      };
     case "ADD_TO_CART":
       // *Is the item already added in the cart?
       const isItemInCart = state.cartItems.find(
@@ -46,7 +43,7 @@ const AppReducer = (state: State, action: Action): State => {
         ...state,
         cartItems: [...state.cartItems].reduce((acc, item) => {
           if (item.id === action.payload.id) {
-            if (item.amount === 1) return acc;
+            if (item.amount <= 1) return acc;
             return [...acc, { ...item, amount: item.amount - 1 }];
           } else {
             return [...acc, item];

@@ -2,7 +2,12 @@ import { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
 import { CartItemType } from "../App";
 
-type Action = {
+export type State = {
+  cartItems: CartItemType[];
+  currentItem: CartItemType;
+};
+
+export type Action = {
   type: string;
   payload: CartItemType;
 };
@@ -10,11 +15,12 @@ type Action = {
 // *Initial state
 const initialState = {
   cartItems: [] as CartItemType[],
+  currentItem: {} as CartItemType,
 };
 
 // *Create context
 export const GlobalContext = createContext<{
-  state: typeof initialState;
+  state: State;
   dispatch: (action: Action) => void;
 }>({
   state: initialState,
