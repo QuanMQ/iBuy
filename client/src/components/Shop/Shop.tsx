@@ -9,8 +9,6 @@ import {
   Container,
   LinearProgress,
 } from "@material-ui/core";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 import TabPanelInner from "../TabPanelInner/TabPanelInner";
 
 // *Styles
@@ -104,7 +102,6 @@ function Shop() {
   return (
     <Fragment>
       <Container>
-        <Navbar />
         <AppBar position="static" className={root}>
           <Tabs
             value={value}
@@ -117,7 +114,6 @@ function Shop() {
         </AppBar>
         {tabPanel}
       </Container>
-      <Footer />
     </Fragment>
   );
 }

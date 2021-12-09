@@ -15,10 +15,8 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { NavigateNext, Remove, Add } from "@material-ui/icons";
-import Navbar from "../Navbar/Navbar";
 import Item from "../Item/Item";
 import ItemPurchaseConfirm from "../ItemPurchaseConfirm/ItemPurchaseConfirm";
-import Footer from "../Footer/Footer";
 
 // *Styles
 import { Wrapper, useStyles } from "./ProductDetails.styles";
@@ -46,10 +44,14 @@ const ProductDetails = () => {
       ).json()
   );
   useEffect(() => {
-    if (Object.keys(currentItem).length === 0) {
+    if (
+      currentItem &&
+      Object.keys(currentItem).length === 0 &&
+      Object.getPrototypeOf(currentItem) === Object.prototype
+    ) {
       navigate("/");
     }
-  }, []);
+  });
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -93,7 +95,6 @@ const ProductDetails = () => {
 
   return (
     <Fragment>
-      <Navbar />
       <Container className={container}>
         <Breadcrumbs
           separator={<NavigateNext fontSize="small" />}
@@ -213,7 +214,6 @@ const ProductDetails = () => {
               ))}
         </Splide>
       </Container>
-      <Footer />
     </Fragment>
   );
 };

@@ -19,8 +19,6 @@ import {
 import { NavigateNext, Remove, Add } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useStyles, Wrapper } from "./ViewCart.styles";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 
 // *Types
 import { CartItemType } from "../../App";
@@ -69,7 +67,6 @@ function Checkout() {
 
   return (
     <Fragment>
-      <Navbar />
       <Container className={container}>
         <Breadcrumbs
           separator={<NavigateNext fontSize="small" />}
@@ -176,7 +173,6 @@ function Checkout() {
           </Table>
         </TableContainer>
       </Container>
-      <Footer />
     </Fragment>
   );
 }
