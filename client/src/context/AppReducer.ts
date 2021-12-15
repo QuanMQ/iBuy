@@ -1,12 +1,17 @@
-import { CartItemType } from "../App";
+import { CartItemType, UserType } from "../App";
 import { State, Action } from "./GlobalState";
 
 const AppReducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "ADD_CURRENT_USER":
+      return {
+        ...state,
+        currentUser: action.payload as UserType,
+      };
     case "VIEW_CURRENT_ITEM":
       return {
         ...state,
-        currentItem: action.payload,
+        currentItem: action.payload as CartItemType,
       };
     case "ADD_TO_CART":
       // *Is the item already added in the cart?

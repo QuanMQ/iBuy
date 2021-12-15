@@ -159,7 +159,11 @@ function Checkout() {
                   <Button
                     className={button}
                     component={Link}
-                    to="/checkout"
+                    to={
+                      cartItems.every((item) => item.amount !== 0)
+                        ? "/checkout"
+                        : "#"
+                    }
                     size="large"
                     disableElevation
                     fullWidth

@@ -25,12 +25,15 @@ type Props = {
   openMenu: () => void;
 };
 
-const menu = ["Home", "Shop", "Login", "Admin"];
+const menu = ["Home", "Shop", "My Order"];
 
 const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
+  const [error, setError] = useState<null | string>(null);
+  const [authenticated, setAuthenticated] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const {
-    state: { cartItems },
+    state: { cartItems, currentUser },
+    dispatch,
   } = useContext(GlobalContext);
   const {
     nav,
@@ -43,6 +46,36 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
     fabScroll,
     fab,
   } = useStyles();
+  useEffect(() => {
+    const authCheck = () => {
+      fetch("http://localhost:5000/auth/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          throw new Error("failed to authenticate user");
+        })
+        .then((responseJson) => {
+          setAuthenticated(true);
+          dispatch({
+            type: "ADD_CURRENT_USER",
+            payload: responseJson.user,
+          });
+        })
+        .catch((error) => {
+          setAuthenticated(false);
+          setError("Failed to authenticate user");
+        });
+    };
+
+    authCheck();
+  }, []);
   useEffect(() => {
     document.addEventListener("scroll", handleScrolling);
     return () => {
@@ -65,7 +98,13 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
     <Button
       key={index}
       component={Link}
-      to={endpoint === "Home" ? "/" : `/${endpoint.toLowerCase()}`}
+      to={
+        endpoint === "Home"
+          ? "/"
+          : endpoint === "My Order"
+          ? "/order"
+          : `/${endpoint.toLowerCase()}`
+      }
       size="large"
       className={nav}
       onClick={() => {
@@ -87,6 +126,41 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
           </Box>
           <Box display="flex" flexWrap="nowrap" flexGrow={1}>
             {button}
+            {authenticated ? (
+              <Button
+                size="large"
+                className={nav}
+                onClick={() => {
+                  window.open("http://localhost:5000/auth/logout", "_self");
+                  setAuthenticated(false);
+                }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                size="large"
+                className={nav}
+                onClick={() => {
+                  window.open("http://localhost:5000/auth/google", "_self");
+                }}
+              >
+                Login
+              </Button>
+            )}
+            {currentUser.role === "admin" && (
+              <Button
+                component={Link}
+                to="/admin"
+                size="large"
+                className={nav}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Admin
+              </Button>
+            )}
           </Box>
           <Box>
             <IconButton disableRipple onClick={openDialog} className={icon}>

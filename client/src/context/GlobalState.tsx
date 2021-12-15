@@ -1,21 +1,23 @@
 import { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
-import { CartItemType } from "../App";
+import { CartItemType, UserType } from "../App";
 
 export type State = {
   cartItems: CartItemType[];
   currentItem: CartItemType;
+  currentUser: UserType;
 };
 
 export type Action = {
   type: string;
-  payload: CartItemType;
+  payload: any;
 };
 
 // *Initial state
 const initialState = {
   cartItems: [] as CartItemType[],
   currentItem: {} as CartItemType,
+  currentUser: {} as UserType,
 };
 
 // *Create context
