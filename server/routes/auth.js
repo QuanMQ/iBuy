@@ -24,7 +24,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/order",
+    successRedirect: "http://localhost:3000/shop",
     failureRedirect: "http://localhost:3000/failed",
   })
 );

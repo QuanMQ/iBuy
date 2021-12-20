@@ -3,6 +3,11 @@ import { State, Action } from "./GlobalState";
 
 const AppReducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "AUTH_CHECK":
+      return {
+        ...state,
+        authenticated: action.payload as boolean,
+      };
     case "ADD_CURRENT_USER":
       return {
         ...state,
@@ -65,6 +70,11 @@ const AppReducer = (state: State, action: Action): State => {
             return [...acc, item];
           }
         }, [] as CartItemType[]),
+      };
+    case "RESET_CART":
+      return {
+        ...state,
+        cartItems: [] as CartItemType[],
       };
     default:
       return state;

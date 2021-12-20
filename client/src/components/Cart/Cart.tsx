@@ -12,7 +12,7 @@ import { CartItemType } from "../../App";
 
 const Cart = () => {
   const {
-    state: { cartItems },
+    state: { cartItems, authenticated },
   } = useContext(GlobalContext);
   const { button, box } = useStyles();
 
@@ -42,19 +42,34 @@ const Cart = () => {
           >
             View Cart
           </Button>
-          <Button
-            className={button}
-            component={Link}
-            to="/checkout"
-            size="large"
-            disableElevation
-            variant="contained"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            Check Out
-          </Button>
+          {authenticated ? (
+            <Button
+              className={button}
+              component={Link}
+              to="/checkout"
+              size="large"
+              disableElevation
+              variant="contained"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
+              Check Out
+            </Button>
+          ) : (
+            <Button
+              size="large"
+              className={button}
+              disableElevation
+              variant="contained"
+              onClick={() => {
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                window.open("http://localhost:5000/auth/google", "_self");
+              }}
+            >
+              Please Login To Check Out
+            </Button>
+          )}
         </Box>
       )}
     </Wrapper>

@@ -25,14 +25,13 @@ type Props = {
   openMenu: () => void;
 };
 
-const menu = ["Home", "Shop", "My Order"];
+const menu = ["Home", "Shop"];
 
 const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
   const [error, setError] = useState<null | string>(null);
-  const [authenticated, setAuthenticated] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const {
-    state: { cartItems, currentUser },
+    state: { cartItems, currentUser, authenticated },
     dispatch,
   } = useContext(GlobalContext);
   const {
@@ -46,6 +45,8 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
     fabScroll,
     fab,
   } = useStyles();
+
+  // *Check if user is authenticated
   useEffect(() => {
     const authCheck = () => {
       fetch("http://localhost:5000/auth/success", {
@@ -62,26 +63,65 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
           throw new Error("failed to authenticate user");
         })
         .then((responseJson) => {
-          setAuthenticated(true);
-          dispatch({
-            type: "ADD_CURRENT_USER",
-            payload: responseJson.user,
-          });
+          isAuthenticated(true);
+          addUser(responseJson.user);
         })
-        .catch((error) => {
-          setAuthenticated(false);
+        .catch((err) => {
+          isAuthenticated(false);
           setError("Failed to authenticate user");
+          console.log(error);
         });
     };
 
     authCheck();
   }, []);
+
+  // *Check if page is scrolling
   useEffect(() => {
     document.addEventListener("scroll", handleScrolling);
     return () => {
       document.removeEventListener("scroll", handleScrolling);
     };
   }, []);
+
+  // *Retrieve cart items in case user logs in while there're items in cart
+  useEffect(() => {
+    if (localStorage.getItem("cartItems") !== null) {
+      JSON.parse(localStorage.getItem("cartItems") as string).forEach(
+        (item: CartItemType) => {
+          addToCart(item);
+        }
+      );
+      return () => {
+        localStorage.removeItem("cartItems");
+      };
+    }
+  }, []);
+
+  const isAuthenticated = (auth: boolean) => {
+    dispatch({
+      type: "AUTH_CHECK",
+      payload: auth,
+    });
+  };
+
+  const addUser = (user: object) => {
+    dispatch({
+      type: "ADD_CURRENT_USER",
+      payload: user,
+    });
+  };
+
+  const tempItemsSave = () => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  };
+
+  function addToCart(clickedItem: CartItemType) {
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: clickedItem,
+    });
+  }
 
   const handleScrolling = () => {
     if (window.scrollY) {
@@ -98,13 +138,7 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
     <Button
       key={index}
       component={Link}
-      to={
-        endpoint === "Home"
-          ? "/"
-          : endpoint === "My Order"
-          ? "/order"
-          : `/${endpoint.toLowerCase()}`
-      }
+      to={endpoint === "Home" ? "/" : `/${endpoint.toLowerCase()}`}
       size="large"
       className={nav}
       onClick={() => {
@@ -126,13 +160,27 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
           </Box>
           <Box display="flex" flexWrap="nowrap" flexGrow={1}>
             {button}
+            {authenticated && (
+              <Button
+                component={Link}
+                to="/order"
+                size="large"
+                className={nav}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
+                My Order
+              </Button>
+            )}
             {authenticated ? (
               <Button
                 size="large"
                 className={nav}
                 onClick={() => {
+                  tempItemsSave();
                   window.open("http://localhost:5000/auth/logout", "_self");
-                  setAuthenticated(false);
+                  isAuthenticated(false);
                 }}
               >
                 Logout
@@ -142,13 +190,14 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
                 size="large"
                 className={nav}
                 onClick={() => {
+                  tempItemsSave();
                   window.open("http://localhost:5000/auth/google", "_self");
                 }}
               >
                 Login
               </Button>
             )}
-            {currentUser.role === "admin" && (
+            {authenticated && currentUser.role === "admin" && (
               <Button
                 component={Link}
                 to="/admin"

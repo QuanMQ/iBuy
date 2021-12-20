@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core";
 
 export const Wrapper = styled.aside`
   font-family: Arial, Helvetica, sans-serif;
@@ -16,20 +16,27 @@ export const Wrapper = styled.aside`
   }
 `;
 
-export const useStyles = makeStyles({
-  button: {
-    fontWeight: "bold",
-    borderRadius: "20px",
-    width: "40%",
-    backgroundColor: "#222",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#717FE0",
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      fontWeight: "bold",
+      borderRadius: "20px",
+      width: "70%",
+      marginTop: "20px",
+      backgroundColor: "#222",
+      color: "#fff",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "1rem",
+      },
+      "&:hover": {
+        backgroundColor: "#717FE0",
+      },
     },
-  },
-  box: {
-    marginTop: "20px",
-    display: "flex",
-    justifyContent: "space-evenly",
-  },
-});
+    box: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+  })
+);

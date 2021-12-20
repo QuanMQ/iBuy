@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalState";
 import {
   Drawer,
   List,
@@ -5,7 +7,14 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { Home, LocalMall, VpnKey, SupervisorAccount } from "@material-ui/icons";
+import {
+  Home,
+  LocalMall,
+  MeetingRoom,
+  SupervisorAccount,
+  ExitToApp,
+  ShoppingBasket,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 // *Styles
@@ -18,8 +27,24 @@ type Props = {
 
 const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
   const { link } = useStyles();
+  const {
+    state: { cartItems, currentUser, authenticated },
+    dispatch,
+  } = useContext(GlobalContext);
+
   const scrollTop = () => {
     window.scrollTo(0, 0);
+  };
+
+  const tempItemsSave = () => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  };
+
+  const isAuthenticated = (auth: boolean) => {
+    dispatch({
+      type: "AUTH_CHECK",
+      payload: auth,
+    });
   };
 
   return (
@@ -37,18 +62,50 @@ const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
           </ListItemIcon>
           <ListItemText className={link} primary="Shop" />
         </ListItem>
-        <ListItem onClick={scrollTop} component={Link} to="/login">
-          <ListItemIcon>
-            <VpnKey />
-          </ListItemIcon>
-          <ListItemText className={link} primary="Login" />
-        </ListItem>
-        <ListItem onClick={scrollTop} component={Link} to="/admin">
-          <ListItemIcon>
-            <SupervisorAccount />
-          </ListItemIcon>
-          <ListItemText className={link} primary="Admin" />
-        </ListItem>
+        {authenticated && (
+          <ListItem onClick={scrollTop} component={Link} to="/order">
+            <ListItemIcon>
+              <ShoppingBasket />
+            </ListItemIcon>
+            <ListItemText className={link} primary="My Order" />
+          </ListItem>
+        )}
+        {authenticated ? (
+          <ListItem
+            onClick={() => {
+              scrollTop();
+              tempItemsSave();
+              window.open("http://localhost:5000/auth/logout", "_self");
+              isAuthenticated(false);
+            }}
+          >
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText className={link} primary="Logout" />
+          </ListItem>
+        ) : (
+          <ListItem
+            onClick={() => {
+              scrollTop();
+              tempItemsSave();
+              window.open("http://localhost:5000/auth/google", "_self");
+            }}
+          >
+            <ListItemIcon>
+              <MeetingRoom />
+            </ListItemIcon>
+            <ListItemText className={link} primary="Login" />
+          </ListItem>
+        )}
+        {authenticated && currentUser.role === "admin" && (
+          <ListItem onClick={scrollTop} component={Link} to="/admin">
+            <ListItemIcon>
+              <SupervisorAccount />
+            </ListItemIcon>
+            <ListItemText className={link} primary="Admin" />
+          </ListItem>
+        )}
       </List>
     </Drawer>
   );

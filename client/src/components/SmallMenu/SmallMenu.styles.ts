@@ -6,6 +6,7 @@ export const useStyles = makeStyles({
     color: "#333",
     "&:hover": {
       color: "#717FE0",
+      cursor: "pointer",
     },
   },
 });

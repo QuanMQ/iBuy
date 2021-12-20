@@ -6,11 +6,12 @@ export type State = {
   cartItems: CartItemType[];
   currentItem: CartItemType;
   currentUser: UserType;
+  authenticated: boolean;
 };
 
 export type Action = {
   type: string;
-  payload: any;
+  payload?: any;
 };
 
 // *Initial state
@@ -18,6 +19,7 @@ const initialState = {
   cartItems: [] as CartItemType[],
   currentItem: {} as CartItemType,
   currentUser: {} as UserType,
+  authenticated: false,
 };
 
 // *Create context

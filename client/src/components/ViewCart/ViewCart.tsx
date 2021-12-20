@@ -26,7 +26,7 @@ import { CartItemType } from "../../App";
 function Checkout() {
   const { container, crumbs, button, table } = useStyles();
   const {
-    state: { cartItems },
+    state: { cartItems, authenticated },
     dispatch,
   } = useContext(GlobalContext);
 
@@ -152,25 +152,48 @@ function Checkout() {
               <TableRow>
                 <TableCell colSpan={2}>
                   <Typography variant="h5" color="textPrimary">
-                    Total: ${calculateTotal(cartItems).toFixed(2)}
+                    <strong>Grand Total:</strong> $
+                    {calculateTotal(cartItems).toFixed(2)}
                   </Typography>
                 </TableCell>
                 <TableCell colSpan={2}>
-                  <Button
-                    className={button}
-                    component={Link}
-                    to={
-                      cartItems.every((item) => item.amount !== 0)
-                        ? "/checkout"
-                        : "#"
-                    }
-                    size="large"
-                    disableElevation
-                    fullWidth
-                    variant="contained"
-                  >
-                    Check Out
-                  </Button>
+                  {authenticated ? (
+                    <Button
+                      className={button}
+                      component={Link}
+                      to={
+                        cartItems.every((item) => item.amount !== 0)
+                          ? "/checkout"
+                          : "#"
+                      }
+                      size="large"
+                      disableElevation
+                      fullWidth
+                      variant="contained"
+                    >
+                      Check Out
+                    </Button>
+                  ) : (
+                    <Button
+                      size="large"
+                      disableElevation
+                      fullWidth
+                      variant="contained"
+                      className={button}
+                      onClick={() => {
+                        localStorage.setItem(
+                          "cartItems",
+                          JSON.stringify(cartItems)
+                        );
+                        window.open(
+                          "http://localhost:5000/auth/google",
+                          "_self"
+                        );
+                      }}
+                    >
+                      Please Log In To Check Out
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             </TableFooter>
