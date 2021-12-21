@@ -84,6 +84,14 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
     };
   }, []);
 
+  // *Temporarily save cart items
+  useEffect(() => {
+    window.addEventListener("beforeunload", tempItemsSave);
+    return () => {
+      window.removeEventListener("beforeunload", tempItemsSave);
+    };
+  });
+
   // *Retrieve cart items in case user logs in while there're items in cart
   useEffect(() => {
     if (localStorage.getItem("cartItems") !== null) {
@@ -178,7 +186,6 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
                 size="large"
                 className={nav}
                 onClick={() => {
-                  tempItemsSave();
                   window.open("http://localhost:5000/auth/logout", "_self");
                   isAuthenticated(false);
                 }}
@@ -190,7 +197,6 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
                 size="large"
                 className={nav}
                 onClick={() => {
-                  tempItemsSave();
                   window.open("http://localhost:5000/auth/google", "_self");
                 }}
               >

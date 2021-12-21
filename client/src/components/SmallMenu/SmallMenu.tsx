@@ -28,16 +28,12 @@ type Props = {
 const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
   const { link } = useStyles();
   const {
-    state: { cartItems, currentUser, authenticated },
+    state: { currentUser, authenticated },
     dispatch,
   } = useContext(GlobalContext);
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
-  };
-
-  const tempItemsSave = () => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
   const isAuthenticated = (auth: boolean) => {
@@ -74,7 +70,6 @@ const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
           <ListItem
             onClick={() => {
               scrollTop();
-              tempItemsSave();
               window.open("http://localhost:5000/auth/logout", "_self");
               isAuthenticated(false);
             }}
@@ -88,7 +83,6 @@ const SmallMenu: React.FC<Props> = ({ isOpen, closeMenu }) => {
           <ListItem
             onClick={() => {
               scrollTop();
-              tempItemsSave();
               window.open("http://localhost:5000/auth/google", "_self");
             }}
           >

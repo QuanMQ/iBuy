@@ -42,7 +42,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         color: "#717FE0",
       },
-      [theme.breakpoints.down(670)]: {
+      [theme.breakpoints.down("sm")]: {
         display: "none",
       },
     },
@@ -51,7 +51,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       "&:hover": {
         color: "#717FE0",
       },
-      [theme.breakpoints.down(670)]: {
+      [theme.breakpoints.down("sm")]: {
         display: "inline",
       },
     },

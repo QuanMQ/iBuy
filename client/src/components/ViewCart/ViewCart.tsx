@@ -41,7 +41,7 @@ function Checkout() {
     }
   };
 
-  function addToCart(clickedItem: CartItemType) {
+  function addOneToCart(clickedItem: CartItemType) {
     dispatch({
       type: "ADD_SINGLE_ITEM_TO_CART",
       payload: clickedItem,
@@ -82,11 +82,11 @@ function Checkout() {
             <TableHead>
               <TableRow>
                 <TableCell colSpan={2}>Product</TableCell>
-                <TableCell align="center" className="price">
+                <TableCell align="center" className="hidden">
                   Price
                 </TableCell>
                 <TableCell align="center">Quantity</TableCell>
-                <TableCell align="center" className="total">
+                <TableCell align="center" className="hidden">
                   Total
                 </TableCell>
               </TableRow>
@@ -100,7 +100,7 @@ function Checkout() {
                     </Wrapper>
                   </TableCell>
                   <TableCell>{item.title}</TableCell>
-                  <TableCell align="center" className="price">
+                  <TableCell align="center" className="hidden">
                     ${item.price}
                   </TableCell>
                   <TableCell align="center">
@@ -130,7 +130,7 @@ function Checkout() {
                       </IconButton>
                       <IconButton
                         onClick={() => {
-                          addToCart(item);
+                          addOneToCart(item);
                         }}
                       >
                         <Add />
@@ -142,7 +142,7 @@ function Checkout() {
                       </Typography>
                     )}
                   </TableCell>
-                  <TableCell align="center" className="total">
+                  <TableCell align="center" className="hidden">
                     ${(item.amount * item.price).toFixed(2)}
                   </TableCell>
                 </TableRow>
@@ -181,10 +181,6 @@ function Checkout() {
                       variant="contained"
                       className={button}
                       onClick={() => {
-                        localStorage.setItem(
-                          "cartItems",
-                          JSON.stringify(cartItems)
-                        );
                         window.open(
                           "http://localhost:5000/auth/google",
                           "_self"

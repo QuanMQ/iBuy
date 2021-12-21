@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       "& #error": {
         marginTop: "10px",
       },
-      "& .price, & .total": {
+      "& .hidden": {
         [theme.breakpoints.down(900)]: {
           display: "none",
         },
