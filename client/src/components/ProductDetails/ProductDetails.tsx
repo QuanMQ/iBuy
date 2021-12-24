@@ -111,13 +111,7 @@ const ProductDetails = () => {
         <Wrapper>
           <img src={image} alt="" id="product-img" />
           <Box id="product-details">
-            <Typography
-              align="justify"
-              style={{ paddingRight: "15px" }}
-              variant="h5"
-            >
-              {title}
-            </Typography>
+            <Typography variant="h5">{title}</Typography>
             <Typography variant="h6">${price}</Typography>
             <Typography align="justify" id="description">
               {description}

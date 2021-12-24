@@ -5,19 +5,11 @@ export const Wrapper = styled.div`
   display: flex;
   margin-top: 1rem;
 
-  @media (max-width: 900px) {
-    flex-direction: column;
-    align-items: center;
-  }
-
   #product-img {
     max-width: 40%;
     max-height: 65vh;
     object-fit: contain;
     padding: 2rem;
-    @media (max-width: 900px) {
-      max-width: 100%;
-    }
   }
 
   #product-details {
@@ -27,8 +19,22 @@ export const Wrapper = styled.div`
     > * {
       margin-top: 15px;
     }
-    @media (max-width: 900px) {
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+
+    #product-img {
+      max-width: 100%;
+    }
+
+    #product-details {
       align-items: center;
+
+      h5 {
+        text-align: center;
+      }
     }
   }
 `;

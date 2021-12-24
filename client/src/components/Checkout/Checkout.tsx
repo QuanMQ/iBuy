@@ -108,7 +108,10 @@ export default function Checkout() {
   const handleOrder = async () => {
     setActiveStep(activeStep + 1);
     window.scrollTo(0, 0);
-    await fetch("http://localhost:5000/orders", {
+    dispatch({
+      type: "RESET_CART",
+    });
+    await fetch("/orders", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -116,9 +119,6 @@ export default function Checkout() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(order),
-    });
-    dispatch({
-      type: "RESET_CART",
     });
   };
 

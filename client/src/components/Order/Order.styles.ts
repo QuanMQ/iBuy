@@ -29,22 +29,35 @@ export const useStyles = makeStyles((theme: Theme) =>
           display: "none",
         },
       },
-      "& .xs": {
-        [theme.breakpoints.down("xs")]: {
+      "& #price-col": {
+        transform: "translateX(18px)",
+      },
+      [theme.breakpoints.down("xs")]: {
+        "& .xs": {
           display: "none",
+        },
+        "& #product-col": {
+          transform: "translateX(5px)",
         },
       },
     },
     productCell: {
-      width: "25%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      margin: "20px auto",
       "& img": {
-        width: "100%",
-        height: "100%",
+        width: "25%",
+        height: "25%",
+        [theme.breakpoints.down("sm")]: {
+          width: "100%",
+          height: "100%",
+        },
       },
     },
     productRow: {
-      "&:last-child td": {
-        borderBottom: "none",
+      "&:last-child hr": {
+        display: "none",
       },
     },
   })

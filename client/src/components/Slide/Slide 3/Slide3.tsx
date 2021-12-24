@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { Button, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -10,6 +11,17 @@ const x = 850;
 
 const Slide3 = () => {
   const { title, subTitle } = useStyles();
+  const [titlePos, setTitlePos] = useState("50vh");
+  const [buttonPos, setButtonPos] = useState("40vh");
+  useEffect(() => {
+    calPos();
+  });
+  useEffect(() => {
+    window.addEventListener("resize", calPos);
+    return () => {
+      window.removeEventListener("resize", calPos);
+    };
+  }, []);
   const props1 = useSpring({
     to: { opacity: 1, rotateZ: 0 },
     from: { opacity: 0, rotateZ: -90 },
@@ -31,6 +43,14 @@ const Slide3 = () => {
     delay: x * 3,
     reset: true,
   });
+
+  const calPos = () => {
+    if (window.innerWidth < 576) {
+      setTitlePos("55vh");
+      setButtonPos("45vh");
+    }
+  };
+
   return (
     <div
       style={{
@@ -58,7 +78,7 @@ const Slide3 = () => {
         style={{
           position: "absolute",
           left: "50px",
-          bottom: "50vh",
+          bottom: titlePos,
           transformOrigin: "right center",
           ...props2,
         }}
@@ -70,7 +90,7 @@ const Slide3 = () => {
       <animated.div
         style={{
           position: "absolute",
-          bottom: "40vh",
+          bottom: buttonPos,
           left: "50px",
           ...props3,
         }}

@@ -91,10 +91,8 @@ const ItemQuickView: React.FC<Props> = ({
         <DialogWrapper>
           <img src={item.image} alt="" id="dialog-img" />
           <div>
-            <DialogTitle id="quick-view" disableTypography>
-              <Typography style={{ paddingRight: "15px" }} variant="h5">
-                {item.title}
-              </Typography>
+            <DialogTitle disableTypography>
+              <Typography variant="h5">{item.title}</Typography>
               <IconButton className={closeButton} onClick={closeDialog}>
                 <Close />
               </IconButton>

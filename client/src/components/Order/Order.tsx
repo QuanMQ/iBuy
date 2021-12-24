@@ -13,6 +13,8 @@ import {
   TableRow,
   Tooltip,
   withStyles,
+  Box,
+  Divider,
 } from "@material-ui/core";
 import { NavigateNext } from "@material-ui/icons";
 import { useStyles } from "./Order.styles";
@@ -41,7 +43,7 @@ function Order() {
   });
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await fetch("http://localhost:5000/orders", {
+      const response = await fetch("/orders", {
         method: "GET",
         mode: "cors",
         credentials: "include",
@@ -57,6 +59,9 @@ function Order() {
 
     fetchOrders();
   }, []);
+  useEffect(() => {
+    hideCol();
+  });
   useEffect(() => {
     window.addEventListener("resize", hideCol);
     return () => {
@@ -89,17 +94,21 @@ function Order() {
             <TableHead>
               <TableRow>
                 <TableCell>Order Number</TableCell>
-                <TableCell align="center">Products</TableCell>
-                <TableCell align="center" className="sm">
+                <TableCell align="center" id="product-col">
+                  Products
+                </TableCell>
+                <TableCell align="right" className="sm" id="price-col">
                   Price
                 </TableCell>
-                <TableCell align="center" className="sm">
+                <TableCell align="right" className="sm">
                   Quantity
                 </TableCell>
-                <TableCell align="center" className="sm">
+                <TableCell align="right" className="sm">
                   Total
                 </TableCell>
-                <TableCell align="center">Grand Total</TableCell>
+                <TableCell align="center" className="xs">
+                  Grand Total
+                </TableCell>
                 <TableCell align="center" className="xs">
                   Shipping Address
                 </TableCell>
@@ -113,8 +122,8 @@ function Order() {
                     <TableCell>#{orderNumber}</TableCell>
                     <TableCell colSpan={hide ? 1 : 4}>
                       {products.map((product: CartItemType, index: number) => (
-                        <TableRow key={index} className={productRow}>
-                          <TableCell align="left" className={productCell}>
+                        <Box key={index} className={productRow}>
+                          <Box className={productCell}>
                             <CustomTooltip
                               arrow
                               title={product.title}
@@ -122,20 +131,19 @@ function Order() {
                             >
                               <img src={product.image} alt={product.title} />
                             </CustomTooltip>
-                          </TableCell>
-                          <TableCell align="center" className="sm">
-                            ${product.price}
-                          </TableCell>
-                          <TableCell align="right" className="sm">
-                            {product.amount}
-                          </TableCell>
-                          <TableCell align="right" className="sm">
-                            ${product.amount * product.price}
-                          </TableCell>
-                        </TableRow>
+                            <Box className="sm">${product.price}</Box>
+                            <Box className="sm">{product.amount}</Box>
+                            <Box className="sm">
+                              ${product.amount * product.price}
+                            </Box>
+                          </Box>
+                          <Divider />
+                        </Box>
                       ))}
                     </TableCell>
-                    <TableCell align="center">${totals}</TableCell>
+                    <TableCell align="center" className="xs">
+                      ${totals}
+                    </TableCell>
                     <TableCell align="center" className="xs">
                       {address}
                     </TableCell>

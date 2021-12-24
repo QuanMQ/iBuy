@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import { Container } from "@material-ui/core";
 import {
@@ -25,10 +25,28 @@ import { CartItemType } from "../../App";
 
 function Checkout() {
   const { container, crumbs, button, table } = useStyles();
+  const [hide, setHide] = useState(false);
   const {
     state: { cartItems, authenticated },
     dispatch,
   } = useContext(GlobalContext);
+  useEffect(() => {
+    hideCol();
+  });
+  useEffect(() => {
+    window.addEventListener("resize", hideCol);
+    return () => {
+      window.removeEventListener("resize", hideCol);
+    };
+  }, []);
+
+  const hideCol = () => {
+    if (window.innerWidth < 576) {
+      setHide(true);
+    } else {
+      setHide(false);
+    }
+  };
 
   // *Actions
   const handleAddToCart = (clickedItem: CartItemType, quantity: number) => {
@@ -81,12 +99,18 @@ function Checkout() {
           <Table aria-label="simple table" className={table}>
             <TableHead>
               <TableRow>
-                <TableCell colSpan={2}>Product</TableCell>
-                <TableCell align="center" className="hidden">
+                <TableCell
+                  id="product-col"
+                  align="center"
+                  colSpan={hide ? 1 : 2}
+                >
+                  Products
+                </TableCell>
+                <TableCell align="center" className="sm">
                   Price
                 </TableCell>
                 <TableCell align="center">Quantity</TableCell>
-                <TableCell align="center" className="hidden">
+                <TableCell align="center" className="sm">
                   Total
                 </TableCell>
               </TableRow>
@@ -99,8 +123,8 @@ function Checkout() {
                       <img src={item.image} alt={item.title} />
                     </Wrapper>
                   </TableCell>
-                  <TableCell>{item.title}</TableCell>
-                  <TableCell align="center" className="hidden">
+                  <TableCell className="xs">{item.title}</TableCell>
+                  <TableCell align="center" className="sm">
                     ${item.price}
                   </TableCell>
                   <TableCell align="center">
@@ -142,7 +166,7 @@ function Checkout() {
                       </Typography>
                     )}
                   </TableCell>
-                  <TableCell align="center" className="hidden">
+                  <TableCell align="center" className="sm">
                     ${(item.amount * item.price).toFixed(2)}
                   </TableCell>
                 </TableRow>
@@ -150,7 +174,7 @@ function Checkout() {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={2}>
+                <TableCell colSpan={hide ? 1 : 2}>
                   <Typography variant="h5" color="textPrimary">
                     <strong>Grand Total:</strong> $
                     {calculateTotal(cartItems).toFixed(2)}

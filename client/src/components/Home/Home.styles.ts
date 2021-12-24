@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       top: "-4rem",
       left: "1rem",
       [theme.breakpoints.down("xs")]: {
-        fontSize: "2.5rem",
+        fontSize: "2rem",
       },
     },
   })

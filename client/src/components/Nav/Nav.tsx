@@ -49,7 +49,7 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
   // *Check if user is authenticated
   useEffect(() => {
     const authCheck = () => {
-      fetch("http://localhost:5000/auth/success", {
+      fetch("/auth/success", {
         method: "GET",
         credentials: "include",
         headers: {

@@ -16,6 +16,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    "& img": {
+      maxWidth: "20%",
+      maxHeight: "20%",
+    },
+    "& .product-title": {
+      maxWidth: "58%",
+    },
   },
   total: {
     fontWeight: 700,
@@ -46,17 +53,23 @@ export const Review: React.FC<Props> = ({ order }) => {
   return (
     <Fragment>
       <Typography variant="h6" gutterBottom>
-        <strong>Order summary</strong>
+        <strong>Order summary:</strong>
       </Typography>
       <List disablePadding>
         {products.map((product) => (
           <ListItem className={classes.listItem} key={product.id}>
-            <ListItemText primary={product.title} />
-            <Typography variant="body2">${product.price}</Typography>
+            <img src={product.image} alt={product.title} />
+            <ListItemText
+              className="product-title"
+              primary={`(${product.amount}x) ${product.title}`}
+            />
+            <Typography variant="body2">
+              ${product.price * product.amount}
+            </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Grand Total:" />
           <Typography variant="subtitle1" className={classes.total}>
             ${totals}
           </Typography>

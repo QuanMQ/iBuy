@@ -37,14 +37,22 @@ export const useStyles = makeStyles((theme: Theme) =>
       "& #error": {
         marginTop: "10px",
       },
-      "& .hidden": {
-        [theme.breakpoints.down(900)]: {
+      "& .xs": {
+        [theme.breakpoints.down("xs")]: {
           display: "none",
         },
       },
       "& [type='number']": {
         width: "100px",
-        [theme.breakpoints.down(900)]: {
+      },
+      [theme.breakpoints.down("sm")]: {
+        "& #product-col": {
+          transform: "translateX(-14px)",
+        },
+        "& .sm": {
+          display: "none",
+        },
+        "& [type='number']": {
           width: "50px",
         },
       },

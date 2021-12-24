@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { Button, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -9,6 +10,17 @@ const x = 650;
 
 const Slide2 = () => {
   const { title, subTitle } = useStyles();
+  const [titlePos, setTitlePos] = useState("50vh");
+  const [buttonPos, setButtonPos] = useState("40vh");
+  useEffect(() => {
+    calPos();
+  });
+  useEffect(() => {
+    window.addEventListener("resize", calPos);
+    return () => {
+      window.removeEventListener("resize", calPos);
+    };
+  }, []);
   const props1 = useSpring({
     to: { left: "50px", rotateZ: 0, opacity: 1 },
     from: { left: "-100px", rotateZ: -120, opacity: 0 },
@@ -24,12 +36,20 @@ const Slide2 = () => {
     reset: true,
   });
   const props3 = useSpring({
-    to: { bottom: "40vh", opacity: 1 },
+    to: { bottom: buttonPos, opacity: 1 },
     from: { bottom: "20vh", opacity: 0 },
     config: { duration: x },
     delay: x * 3,
     reset: true,
   });
+
+  const calPos = () => {
+    if (window.innerWidth < 576) {
+      setTitlePos("55vh");
+      setButtonPos("45vh");
+    }
+  };
+
   return (
     <div
       style={{
@@ -45,7 +65,9 @@ const Slide2 = () => {
           Men New Season
         </Typography>
       </animated.div>
-      <animated.div style={{ position: "absolute", bottom: "50vh", ...props2 }}>
+      <animated.div
+        style={{ position: "absolute", bottom: titlePos, ...props2 }}
+      >
         <Typography variant="h2" className={title}>
           Jackets & Coats
         </Typography>
