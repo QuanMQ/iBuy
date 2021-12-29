@@ -3,14 +3,14 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     } else {
-      res.redirect("http://localhost:3000");
+      res.redirect("https://ibuy-quanmq.herokuapp.com");
     }
   },
   ensureAd: function (req, res, next) {
     if (req.isAuthenticated() && req.user.role === "admin") {
       return next();
     } else {
-      res.redirect("http://localhost:3000");
+      res.redirect("https://ibuy-quanmq.herokuapp.com");
     }
   },
 };
