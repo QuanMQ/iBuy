@@ -21,11 +21,11 @@
     "express-session": "^1.17.2",
     "mongoose": "^6.1.0",
     "passport": "^0.5.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "cross-env": "^7.0.3",
     "nodemon": "^2.0.15"
   }
 }
