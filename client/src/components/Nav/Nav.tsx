@@ -221,7 +221,12 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
             <IconButton disableRipple onClick={openDialog} className={icon}>
               <Search />
             </IconButton>
-            <IconButton disableRipple onClick={openCart} className={icon}>
+            <IconButton
+              data-testid="cart"
+              disableRipple
+              onClick={openCart}
+              className={icon}
+            >
               <Badge badgeContent={getTotalItems(cartItems)} color="error">
                 <ShoppingCart />
               </Badge>

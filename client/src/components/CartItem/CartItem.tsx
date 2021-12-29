@@ -54,7 +54,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
           >
             -
           </Button>
-          <p>{item.amount}</p>
+          <p data-testid="item-amount">{item.amount}</p>
           <Button
             size="small"
             disableElevation
@@ -65,7 +65,11 @@ const CartItem: React.FC<Props> = ({ item }) => {
           </Button>
         </div>
       </div>
-      <div id="right-panel" onClick={() => removeAllFromCart(item)}>
+      <div
+        data-testid="remove"
+        id="right-panel"
+        onClick={() => removeAllFromCart(item)}
+      >
         <img src={item.image} alt={item.title} />
       </div>
     </Wrapper>
