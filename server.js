@@ -52,17 +52,14 @@ app.use(passport.session());
 app.use("/auth", require("./routes/auth"));
 app.use("/orders", require("./routes/orders"));
 
-// *Server static assets if in production
-if (process.env.NODE_ENV === "production") {
-  // *Set static folder
-  app.use(express.static("public"));
+// *Set static folder
+app.use(express.static("public"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "public", "index.html")
-    );
-  });
-}
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.resolve(__dirname, "public", "index.html")
+  );
+});
 
 const PORT = process.env.PORT || 5000;
 
