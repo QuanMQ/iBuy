@@ -20,7 +20,7 @@ const app = express();
 // *Enable cors
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ibuy-quanmq.herokuapp.com",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -56,14 +56,9 @@ app.use("/orders", require("./routes/orders"));
 app.use(express.static("public"));
 
 app.get("*", (req, res) => {
-  res.sendFile(
-    path.resolve(__dirname, "public", "index.html")
-  );
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(
-  PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-);
+app.listen(PORT, console.log(`Server running on port ${PORT}`));
