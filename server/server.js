@@ -1,16 +1,11 @@
 const path = require("path");
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const methodOverride = require("method-override");
 const passport = require("passport");
-const session = require("express-session");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
-const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
-const { authCheck } = require("./middleware/auth");
 
 // *Load config
 dotenv.config({ path: "./config/config.env" });
@@ -35,9 +30,6 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// *Method override
-app.use(methodOverride("_method"));
-
 // *Sessions
 app.use(
   cookieSession({
@@ -56,22 +48,21 @@ app.use(passport.initialize());
 // *Deserialize cookie from the browser
 app.use(passport.session());
 
-// *Static folder
-// app.use(express.static(path.join(__dirname, "..", "client", "public")));
-
 // *Routes
-// app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
-// app.use("/stories", require("./routes/stories"));
+app.use("/orders", require("./routes/orders"));
 
-app.get("/", authCheck, (req, res) => {
-  res.status(200).json({
-    authenticated: true,
-    message: "user successfully authenticated",
-    user: req.user,
-    cookies: req.cookies,
+// *Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // *Set static folder
+  app.use(express.static("public"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "public", "index.html")
+    );
   });
-});
+}
 
 const PORT = process.env.PORT || 5000;
 

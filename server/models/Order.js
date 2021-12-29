@@ -31,7 +31,7 @@ const OrderSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "in progress",
-    enum: ["in progress", "delivered"],
+    enum: ["in progress", "delivered", "cancelled"],
   },
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
