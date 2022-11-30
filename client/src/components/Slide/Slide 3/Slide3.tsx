@@ -55,7 +55,7 @@ const Slide3 = () => {
     <div
       style={{
         background:
-          "url('https://preview.colorlib.com/theme/cozastore/images/xslide-03.jpg.pagespeed.ic.tP-L47NU9M.webp') no-repeat center center / cover",
+          "url('https://images.pexels.com/photos/605207/pexels-photo-605207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center / cover",
         width: "100%",
         height: "100%",
         position: "relative",
