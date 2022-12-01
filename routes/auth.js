@@ -24,8 +24,8 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "https://ibuy-quanmq.herokuapp.com/shop",
-    failureRedirect: "https://ibuy-quanmq.herokuapp.com/failed",
+    successRedirect: "https://different-button-lion.cyclic.app/shop",
+    failureRedirect: "https://different-button-lion.cyclic.app/failed",
   })
 );
 
@@ -33,7 +33,7 @@ router.get(
 // *@route GET /auth/logout
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("https://ibuy-quanmq.herokuapp.com");
+  res.redirect("https://different-button-lion.cyclic.app");
 });
 
 module.exports = router;
