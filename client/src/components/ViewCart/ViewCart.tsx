@@ -24,7 +24,7 @@ import { useStyles, Wrapper } from "./ViewCart.styles";
 import { CartItemType } from "../../App";
 
 function Checkout() {
-  const { container, crumbs, button, table } = useStyles();
+  const { container, crumbs, button, table, input } = useStyles();
   const [hide, setHide] = useState(false);
   const {
     state: { cartItems, authenticated },
@@ -144,6 +144,7 @@ function Checkout() {
                       <IconButton>
                         <TextField
                           type="number"
+                          className={input}
                           value={item.amount}
                           variant="outlined"
                           size="small"

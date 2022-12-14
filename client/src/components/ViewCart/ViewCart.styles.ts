@@ -23,6 +23,16 @@ export const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "#717FE0",
       },
     },
+    input: {
+      "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button":
+        {
+          "-webkit-appearance": "none",
+          margin: "0",
+        },
+      "& input[type=number]": {
+        "-moz-appearance": "textfield",
+      },
+    },
     table: {
       "& thead th": {
         fontWeight: "bold",

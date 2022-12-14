@@ -37,7 +37,7 @@ const ItemQuickView: React.FC<Props> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(GlobalContext);
-  const { closeButton, dialogButton } = useStyles();
+  const { closeButton, dialogButton, input } = useStyles();
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -118,6 +118,7 @@ const ItemQuickView: React.FC<Props> = ({
                 <IconButton>
                   <TextField
                     type="number"
+                    className={input}
                     value={quantity}
                     variant="outlined"
                     size="small"

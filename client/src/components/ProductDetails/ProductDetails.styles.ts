@@ -73,6 +73,16 @@ export const useStyles = makeStyles((theme: Theme) =>
         alignItems: "center",
       },
     },
+    input: {
+      "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button":
+        {
+          "-webkit-appearance": "none",
+          margin: "0",
+        },
+      "& input[type=number]": {
+        "-moz-appearance": "textfield",
+      },
+    },
     related: {
       borderTop: "solid #F2F2F2 50px",
       fontWeight: "bold",

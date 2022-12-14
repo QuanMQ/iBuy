@@ -33,7 +33,7 @@ const ProductDetails = () => {
     state: { currentItem },
     dispatch,
   } = useContext(GlobalContext);
-  const { container, crumbs, buttonGroup, related } = useStyles();
+  const { container, crumbs, buttonGroup, related, input } = useStyles();
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     "category",
     async (): Promise<CartItemType[]> =>
@@ -129,6 +129,7 @@ const ProductDetails = () => {
                 <IconButton>
                   <TextField
                     type="number"
+                    className={input}
                     value={quantity}
                     variant="outlined"
                     size="small"
