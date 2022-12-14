@@ -46,7 +46,7 @@ const Cart = () => {
             <Button
               className={button}
               component={Link}
-              to="/checkout"
+              to={calculateTotal(cartItems) > 0 ? "/checkout" : "#"}
               size="large"
               disableElevation
               variant="contained"

@@ -137,7 +137,7 @@ function Order() {
                               ${product.amount * product.price}
                             </Box>
                           </Box>
-                          <Divider />
+                          {products.length > 1 && <Divider />}
                         </Box>
                       ))}
                     </TableCell>

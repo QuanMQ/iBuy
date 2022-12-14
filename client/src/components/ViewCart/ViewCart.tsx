@@ -185,11 +185,7 @@ function Checkout() {
                     <Button
                       className={button}
                       component={Link}
-                      to={
-                        cartItems.every((item) => item.amount !== 0)
-                          ? "/checkout"
-                          : "#"
-                      }
+                      to={calculateTotal(cartItems) > 0 ? "/checkout" : "#"}
                       size="large"
                       disableElevation
                       fullWidth

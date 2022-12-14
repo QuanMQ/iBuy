@@ -174,7 +174,7 @@ function Admin() {
                             </CustomTooltip>
                             <Box className="sm">{product.amount}</Box>
                           </Box>
-                          <Divider />
+                          {products.length > 1 && <Divider />}
                         </Box>
                       ))}
                     </TableCell>
