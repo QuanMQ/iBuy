@@ -63,7 +63,7 @@ const Cart = () => {
               disableElevation
               variant="contained"
               onClick={() => {
-                window.open("http://localhost:5000/auth/google", "_self");
+                window.open(`${process.env.REACT_APP_URL}/auth/google`, "_self");
               }}
             >
               Please Login To Check Out
