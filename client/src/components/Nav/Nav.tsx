@@ -186,10 +186,7 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
                 size="large"
                 className={nav}
                 onClick={() => {
-                  window.open(
-                    `${process.env.REACT_APP_URL}/auth/logout`,
-                    "_self"
-                  );
+                  window.open("http://localhost:5000/auth/logout", "_self");
                   isAuthenticated(false);
                 }}
               >
@@ -200,10 +197,7 @@ const Nav: React.FC<Props> = ({ openDialog, openCart, openMenu }) => {
                 size="large"
                 className={nav}
                 onClick={() => {
-                  window.open(
-                    `${process.env.REACT_APP_URL}/auth/google`,
-                    "_self"
-                  );
+                  window.open("http://localhost:5000/auth/google", "_self");
                 }}
               >
                 Login

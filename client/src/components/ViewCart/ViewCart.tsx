@@ -203,7 +203,7 @@ function Checkout() {
                       className={button}
                       onClick={() => {
                         window.open(
-                          `${process.env.REACT_APP_URL}/auth/google`,
+                          "http://localhost:5000/auth/google",
                           "_self"
                         );
                       }}
